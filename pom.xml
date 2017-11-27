@@ -14,7 +14,10 @@
     </repositories>
 
     <properties>
+        <osgi-dp>0.3.0</osgi-dp>
         <apache.camel.version>2.17.2</apache.camel.version>
+        <tycho-version>0.25.0</tycho-version>
+        <tycho-extras-version>0.25.0</tycho-extras-version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -29,21 +32,13 @@
             <groupId>org.apache.camel</groupId>
             <artifactId>camel-core</artifactId>
             <version>${apache.camel.version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.camel</groupId>
             <artifactId>camel-servlet</artifactId>
             <version>${apache.camel.version}</version>
-        </dependency>
-<!--         <dependency> -->
-<!--             <groupId>org.apache.camel</groupId> -->
-<!--             <artifactId>camel-quartz2</artifactId> -->
-<!--             <version>${apache.camel.version}</version> -->
-<!--         </dependency> -->
-        <dependency>
-            <groupId>org.apache.camel</groupId>
-            <artifactId>camel-swagger-java</artifactId>
-            <version>${apache.camel.version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.eclipse.kura</groupId>
@@ -116,7 +111,21 @@
             <plugin>
                 <groupId>de.dentrassi.maven</groupId>
                 <artifactId>osgi-dp</artifactId>
-                <version>0.3.0</version>
+                <version>${osgi-dp}</version>
+                <configuration>
+                    <additionalDependencies>
+                        <additionalDependency>
+                            <groupId>org.apache.camel</groupId>
+                            <artifactId>camel-http-common</artifactId>
+                            <version>${apache.camel.version}</version>
+                        </additionalDependency>
+                        <additionalDependency>
+                            <groupId>org.apache.camel</groupId>
+                            <artifactId>camel-servlet</artifactId>
+                            <version>${apache.camel.version}</version>
+                        </additionalDependency>
+                    </additionalDependencies>
+                </configuration>
                 <executions>
                     <execution>
                         <goals>

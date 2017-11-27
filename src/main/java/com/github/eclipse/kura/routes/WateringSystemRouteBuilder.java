@@ -12,13 +12,14 @@ public class WateringSystemRouteBuilder extends RouteBuilder {
     @BeanInject("automaticWateringSystem")
     private AutomaticWateringSystem automaticWateringSystem = new AutomaticWateringSystem();
     // period=1h15m
-    private String wateringProcess = "timer:wateringProcess?period=10s";
+    private String wateringProcess = "timer:wateringProcess?period=30m";
 
     @Override
     public void configure() throws Exception {
         restConfiguration().component("servlet").bindingMode(RestBindingMode.auto);
 
-        rest("plantation").produces("application/json").get("/list").route().id("list").endRest();
+        rest("plantation").produces("application/json").get("/list").route().id("list").transform().constant("ok")
+                .log("ok").endRest();
 
         from(wateringProcess).routeId("wateringProcess").process(new WateringProcess()).log("=))))) Fixed Time ${body}")
                 .to("mock:success");
